@@ -1,0 +1,92 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Phones | Phone Radar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Phones</h1>
+    
+    <!-- Filter options -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5>Filter Options</h5>
+            <form class="row g-3">
+                <div class="col-md-4">
+                    <label for="brand" class="form-label">Brand</label>
+                    <select class="form-select" id="brand">
+                        <option value="">All Brands</option>
+                        <!-- This would be populated dynamically in a real app -->
+                        <option value="apple">Apple</option>
+                        <option value="samsung">Samsung</option>
+                        <option value="google">Google</option>
+                        <option value="xiaomi">Xiaomi</option>
+                        <option value="oneplus">OnePlus</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="platform" class="form-label">Platform</label>
+                    <select class="form-select" id="platform">
+                        <option value="">All Platforms</option>
+                        <option value="ios">iOS</option>
+                        <option value="android">Android</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="price" class="form-label">Max Price</label>
+                    <input type="range" class="form-range" id="price" min="0" max="2000" step="100">
+                    <div class="text-center"><span id="price-value">$1000</span></div>
+                </div>
+                <div class="col-12 text-end">
+                    <button type="submit" class="btn btn-primary">Apply Filters</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="row">
+        {% for phone in phones %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{% static 'img/'|add:phone.brand.name|lower|add:'-'|add:phone.model_name|lower|add:'.jpg' %}" class="card-img-top" alt="{{ phone.model_name }}" onerror="this.src='{% static 'img/phone-placeholder.jpg' %}'">
+                <div class="card-body">
+                    <h5 class="card-title">{{ phone.model_name }}</h5>
+                    <p class="card-text text-muted">{{ phone.brand.name }}</p>
+                    <p class="card-text">
+                        <strong>Released:</strong> {{ phone.launch_date|date:"F Y" }}<br>
+                        <strong>Platform:</strong> {{ phone.platform }}
+                        {% if phone.os_version %} ({{ phone.os_version }}){% endif %}<br>
+                        <strong>Processor:</strong> {{ phone.processor }}<br>
+                        {% if phone.price %}
+                        <strong>Price:</strong> ${{ phone.price }}
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'phone_detail' phone.id %}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No phones available yet.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Price range slider
+    const priceSlider = document.getElementById('price');
+    const priceValue = document.getElementById('price-value');
+    
+    if (priceSlider && priceValue) {
+        priceSlider.addEventListener('input', function() {
+            priceValue.textContent = '$' + this.value;
+        });
+    }
+</script>
+{% endblock %}
+{% endblock %} 

@@ -1,0 +1,102 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}{{ phone.brand.name }} {{ phone.model_name }} | Phone Radar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'phone_list' %}">Phones</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'brand_detail' phone.brand.id %}">{{ phone.brand.name }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ phone.model_name }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4 text-center">
+            <img src="{% static 'img/'|add:phone.brand.name|lower|add:'-'|add:phone.model_name|lower|add:'.jpg' %}" alt="{{ phone.model_name }}" class="img-fluid mb-3" onerror="this.src='{% static 'img/phone-placeholder.jpg' %}'">
+            {% if phone.price %}
+            <div class="alert alert-info">
+                <h4>${{ phone.price }}</h4>
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="phone-header">
+                <div class="phone-title">
+                    <h1 class="mb-1">{{ phone.model_name }}</h1>
+                    <h3 class="text-muted mb-3">{{ phone.brand.name }}</h3>
+                    <div>
+                        <span class="badge bg-primary">{{ phone.platform }}</span>
+                        <span class="badge bg-secondary">Released: {{ phone.launch_date|date:"F Y" }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h3 class="mb-0">Specifications</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="spec-list">
+                        <li><span class="spec-label">OS:</span> {{ phone.platform }} {% if phone.os_version %}({{ phone.os_version }}){% endif %}</li>
+                        <li><span class="spec-label">Processor:</span> {{ phone.processor }}</li>
+                        <li><span class="spec-label">RAM:</span> {{ phone.ram }}</li>
+                        <li><span class="spec-label">Storage:</span> {{ phone.storage }}</li>
+                        <li><span class="spec-label">Display:</span> {{ phone.display }}</li>
+                        <li><span class="spec-label">Camera:</span> {{ phone.camera }}</li>
+                        <li><span class="spec-label">Battery:</span> {{ phone.battery }}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2 class="mb-4">Reviews</h2>
+    {% for review in reviews %}
+    <div class="review-card">
+        <h4><a href="{% url 'review_detail' review.id %}">{{ review.title }}</a></h4>
+        <div class="review-meta">
+            <span class="review-rating rating-stars" data-rating="{{ review.rating }}"></span>
+            <span>{{ review.rating }}/5</span> | 
+            <span>By {{ review.author }}</span> | 
+            <span>{{ review.date_published|date:"F j, Y" }}</span>
+        </div>
+        <p>{{ review.content|truncatechars:250 }}</p>
+        
+        {% if review.pros or review.cons %}
+        <div class="pros-cons">
+            {% if review.pros %}
+            <div class="pros">
+                <h5>Pros</h5>
+                <p>{{ review.pros }}</p>
+            </div>
+            {% endif %}
+            
+            {% if review.cons %}
+            <div class="cons">
+                <h5>Cons</h5>
+                <p>{{ review.cons }}</p>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        <div class="mt-3">
+            <a href="{% url 'review_detail' review.id %}" class="btn btn-primary btn-sm">Read Full Review</a>
+            {% if review.external_link %}
+            <a href="{{ review.external_link }}" target="_blank" class="btn btn-outline-secondary btn-sm ms-2">
+                External Link <i class="fas fa-external-link-alt ms-1"></i>
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% empty %}
+    <div class="alert alert-info">No reviews available for this phone yet.</div>
+    {% endfor %}
+</div>
+{% endblock %} 

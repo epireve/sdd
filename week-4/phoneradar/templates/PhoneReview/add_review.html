@@ -1,0 +1,99 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Add Review | Phone Radar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'review_list' %}">Reviews</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Add Review</li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="h4 mb-0">Add New Review</h1>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="#">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Review Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="phone_models" class="form-label">Phone Model(s)</label>
+                            <select class="form-select" id="phone_models" name="phone_models" multiple required>
+                                <option value="">Select phone model(s)...</option>
+                                <!-- This would be populated dynamically in a real app -->
+                                <option value="1">Apple iPhone 15 Pro</option>
+                                <option value="2">Apple iPhone 14</option>
+                                <option value="3">Samsung Galaxy S24 Ultra</option>
+                                <option value="4">Samsung Galaxy Z Fold 5</option>
+                                <option value="5">Google Pixel 8 Pro</option>
+                                <option value="6">Google Pixel 7a</option>
+                                <option value="7">Xiaomi 14 Ultra</option>
+                                <option value="8">Xiaomi Redmi Note 13 Pro</option>
+                                <option value="9">OnePlus 12</option>
+                                <option value="10">OnePlus Nord 3</option>
+                            </select>
+                            <div class="form-text">Hold Ctrl (or Cmd on Mac) to select multiple models.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">Rating</label>
+                            <select class="form-select" id="rating" name="rating" required>
+                                <option value="">Select rating...</option>
+                                <option value="5.0">5.0 - Excellent</option>
+                                <option value="4.5">4.5 - Very Good</option>
+                                <option value="4.0">4.0 - Good</option>
+                                <option value="3.5">3.5 - Above Average</option>
+                                <option value="3.0">3.0 - Average</option>
+                                <option value="2.5">2.5 - Below Average</option>
+                                <option value="2.0">2.0 - Poor</option>
+                                <option value="1.5">1.5 - Very Poor</option>
+                                <option value="1.0">1.0 - Terrible</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="content" class="form-label">Review Content</label>
+                            <textarea class="form-control" id="content" name="content" rows="10" required></textarea>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="pros" class="form-label">Pros</label>
+                            <textarea class="form-control" id="pros" name="pros" rows="3"></textarea>
+                            <div class="form-text">Separate multiple pros with commas.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="cons" class="form-label">Cons</label>
+                            <textarea class="form-control" id="cons" name="cons" rows="3"></textarea>
+                            <div class="form-text">Separate multiple cons with commas.</div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="external_link" class="form-label">External Link (Optional)</label>
+                            <input type="url" class="form-control" id="external_link" name="external_link">
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                            <a href="{% url 'review_list' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
