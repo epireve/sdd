@@ -1,0 +1,110 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ review.title }} | Phone Radar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="mb-4">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'review_list' %}">Reviews</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ review.title }}</li>
+            </ol>
+        </nav>
+    </div>
+
+    <article class="mb-5">
+        <header class="mb-4">
+            <h1 class="mb-2">{{ review.title }}</h1>
+            <div class="review-meta mb-3">
+                <span class="review-rating rating-stars" data-rating="{{ review.rating }}"></span>
+                <span>{{ review.rating }}/5</span> | 
+                <span>By {{ review.author }}</span> | 
+                <span>{{ review.date_published|date:"F j, Y" }}</span>
+            </div>
+            
+            <div class="mb-3">
+                <strong>Reviewed Model(s):</strong>
+                {% for model in review.models.all %}
+                <a href="{% url 'phone_detail' model.id %}" class="badge bg-secondary text-decoration-none">{{ model.brand.name }} {{ model.model_name }}</a>
+                {% endfor %}
+            </div>
+        </header>
+        
+        <div class="card mb-4">
+            <div class="card-body">
+                <!-- Review content -->
+                <div class="review-content">
+                    <p>{{ review.content|linebreaks }}</p>
+                </div>
+                
+                {% if review.pros or review.cons %}
+                <div class="pros-cons mt-4">
+                    {% if review.pros %}
+                    <div class="pros">
+                        <h5>Pros</h5>
+                        <p>{{ review.pros }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if review.cons %}
+                    <div class="cons">
+                        <h5>Cons</h5>
+                        <p>{{ review.cons }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+                {% endif %}
+                
+                {% if review.external_link %}
+                <div class="mt-4">
+                    <a href="{{ review.external_link }}" target="_blank" class="btn btn-outline-primary">
+                        Read Original Review <i class="fas fa-external-link-alt ms-1"></i>
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </article>
+
+    <!-- Related phones section -->
+    <section class="mb-5">
+        <h2 class="mb-4">Related Phones</h2>
+        <div class="row">
+            {% for model in review.models.all %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="https://via.placeholder.com/300x200?text={{ model.brand.name }}+{{ model.model_name }}" class="card-img-top" alt="{{ model.model_name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ model.model_name }}</h5>
+                        <p class="card-text text-muted">{{ model.brand.name }}</p>
+                        <p class="card-text">
+                            <span class="badge bg-primary">{{ model.platform }}</span>
+                            {% if model.price %}
+                            <span class="badge bg-secondary">${{ model.price }}</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'phone_detail' model.id %}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- More reviews section -->
+    <section>
+        <h2 class="mb-4">More Reviews</h2>
+        <div class="row">
+            <div class="col-12">
+                <div class="text-center">
+                    <a href="{% url 'review_list' %}" class="btn btn-outline-primary">Browse All Reviews</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %} 

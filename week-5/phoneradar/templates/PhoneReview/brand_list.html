@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Phone Brands | Phone Radar{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="mb-4">Phone Brands</h1>
+    
+    <div class="row">
+        {% for brand in brands %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body text-center">
+                    <img src="{% static 'img/'|add:brand.name|lower|add:'.jpg' %}" alt="{{ brand.name }}" class="brand-logo mb-3" onerror="this.src='{% static 'img/brand-placeholder.jpg' %}'">
+                    <h4 class="card-title">{{ brand.name }}</h4>
+                    <p class="card-text text-muted">Origin: {{ brand.origin }}</p>
+                    <p class="card-text">Manufacturing since: {{ brand.manufacturing_since }}</p>
+                    <p class="card-text">{{ brand.description|truncatechars:100 }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'brand_detail' brand.id %}" class="btn btn-primary">View Details</a>
+                    {% if brand.website %}
+                    <a href="{{ brand.website }}" target="_blank" class="btn btn-outline-secondary ms-2">
+                        Visit Website <i class="fas fa-external-link-alt ms-1"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info">No brands available yet.</div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %} 
