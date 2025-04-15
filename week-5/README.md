@@ -11,7 +11,14 @@ Django-based mobile phone review aggregator with brand/model tracking and user r
 
 ## Screenshots
 
-### Web Application Views
+### Week 5 - Task A: Homepage Hero Update
+**Before:**
+![Homepage Before](../_images/week-5-1.png)
+
+**After:**
+![Homepage After](../_images/week-5-2.png)
+
+### Web Application Views (Previous)
 ![Home Page](../_images/week-4-1.jpg)
 ![Home Page](../_images/week-4-2.jpg)
 ![Home Page](../_images/week-4-3.jpg)
