@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "main",
     "PhoneReview",
+    "games",  # Registered games app from week-5/games
 ]
 
 MIDDLEWARE = [
