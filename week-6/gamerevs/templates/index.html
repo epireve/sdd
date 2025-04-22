@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameRevs - Game Reviews</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>GameRevs</h1>
+            <nav>
+                <ul>
+                    <li class="nav-item"><a href="/">Home</a></li>
+                    <li class="nav-item"><a href="/games">Games</a></li>
+                    <li class="nav-item"><a href="/about">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="featured-games reveal-on-scroll">
+            <h2>Featured Games</h2>
+            
+            <!-- Filter and Search Section -->
+            <div class="filters-container">
+                <div class="filters-row">
+                    <div class="filter-item">
+                        <label for="game-search">Search Games</label>
+                        <input type="text" id="game-search" placeholder="Enter game title or keywords...">
+                    </div>
+                    <div class="filter-item">
+                        <label for="genre-filter">Genre</label>
+                        <select id="genre-filter">
+                            <option value="">All Genres</option>
+                            <option value="rpg" data-name="RPG">RPG</option>
+                            <option value="action" data-name="Action">Action</option>
+                            <option value="adventure" data-name="Adventure">Adventure</option>
+                            <option value="strategy" data-name="Strategy">Strategy</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="platform-filter">Platform</label>
+                        <select id="platform-filter">
+                            <option value="">All Platforms</option>
+                            <option value="pc" data-name="PC">PC</option>
+                            <option value="playstation" data-name="PlayStation">PlayStation</option>
+                            <option value="xbox" data-name="Xbox">Xbox</option>
+                            <option value="switch" data-name="Switch">Switch</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button id="reset-filters">Reset Filters</button>
+                </div>
+            </div>
+            
+            <div class="game-grid">
+                <div class="game-card" data-genre="rpg" data-platform="pc" data-year="2022">
+                    <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="Elden Ring">
+                    <div class="game-info">
+                        <h3 class="game-title">Elden Ring</h3>
+                        <div class="game-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">5.0</span>
+                        </div>
+                        <p class="game-description">An action RPG developed by FromSoftware and published by Bandai Namco Entertainment.</p>
+                        <a href="/game/1" class="button">View Details</a>
+                        
+                        <!-- Hidden extended details that can be toggled -->
+                        <div class="game-details-extended" style="display: none;">
+                            <hr>
+                            <h4>Game Details</h4>
+                            <p><strong>Release Date:</strong> February 25, 2022</p>
+                            <p><strong>Developer:</strong> FromSoftware</p>
+                            <p><strong>Publisher:</strong> Bandai Namco</p>
+                            <p><strong>Genres:</strong> Action RPG, Open World</p>
+                            <div class="review-preview">
+                                <h5>Latest Review</h5>
+                                <div class="review-content">
+                                    "An absolute masterpiece that combines the best elements of FromSoftware's previous titles with an open world design."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card" data-genre="rpg" data-platform="pc" data-year="2023">
+                    <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="Baldur's Gate 3">
+                    <div class="game-info">
+                        <h3 class="game-title">Baldur's Gate 3</h3>
+                        <div class="game-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-text">4.9</span>
+                        </div>
+                        <p class="game-description">A role-playing video game developed and published by Larian Studios.</p>
+                        <a href="/game/2" class="button">View Details</a>
+                        
+                        <!-- Hidden extended details that can be toggled -->
+                        <div class="game-details-extended" style="display: none;">
+                            <hr>
+                            <h4>Game Details</h4>
+                            <p><strong>Release Date:</strong> August 3, 2023</p>
+                            <p><strong>Developer:</strong> Larian Studios</p>
+                            <p><strong>Publisher:</strong> Larian Studios</p>
+                            <p><strong>Genres:</strong> RPG, Turn-based Strategy</p>
+                            <div class="review-preview">
+                                <h5>Latest Review</h5>
+                                <div class="review-content">
+                                    "Baldur's Gate 3 is an unprecedented achievement in the CRPG genre, offering unparalleled depth and player choice."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="game-card" data-genre="action" data-platform="playstation" data-year="2023">
+                    <img src="{{ url_for('static', filename='img/placeholder.jpg') }}" alt="Hogwarts Legacy">
+                    <div class="game-info">
+                        <h3 class="game-title">Hogwarts Legacy</h3>
+                        <div class="game-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating-text">4.0</span>
+                        </div>
+                        <p class="game-description">An action role-playing game set in the late 1800s in the Wizarding World.</p>
+                        <a href="/game/3" class="button view-details">View Details</a>
+                        
+                        <!-- Hidden extended details that can be toggled -->
+                        <div class="game-details-extended" style="display: none;">
+                            <hr>
+                            <h4>Game Details</h4>
+                            <p><strong>Release Date:</strong> February 10, 2023</p>
+                            <p><strong>Developer:</strong> Avalanche Software</p>
+                            <p><strong>Publisher:</strong> Warner Bros. Games</p>
+                            <p><strong>Genres:</strong> Action RPG, Adventure</p>
+                            <div class="review-preview">
+                                <h5>Latest Review</h5>
+                                <div class="review-content">
+                                    "Hogwarts Legacy delivers an immersive wizarding world experience with engaging gameplay and a rich story that fans of the franchise will appreciate."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="review-form reveal-on-scroll">
+            <h2>Add a Review</h2>
+            <form id="reviewForm" action="/review/add" method="post">
+                <div class="form-group">
+                    <label for="gameName">Game Name</label>
+                    <input type="text" id="gameName" name="game_name" required>
+                </div>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <div class="rating-select">
+                        <span class="star" data-value="1">☆</span>
+                        <span class="star" data-value="2">☆</span>
+                        <span class="star" data-value="3">☆</span>
+                        <span class="star" data-value="4">☆</span>
+                        <span class="star" data-value="5">☆</span>
+                        <input type="hidden" id="rating" name="rating" value="0" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reviewText">Your Review</label>
+                    <textarea id="reviewText" name="review_text" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="button">Submit Review</button>
+            </form>
+        </section>
+        
+        <section class="recent-reviews reveal-on-scroll">
+            <h2>Recent Reviews</h2>
+            
+            <!-- Sort controls for reviews -->
+            <div class="sort-controls">
+                <label for="sort-reviews">Sort by:</label>
+                <select id="sort-reviews">
+                    <option value="date-newest">Date (Newest First)</option>
+                    <option value="date-oldest">Date (Oldest First)</option>
+                    <option value="rating-highest">Rating (Highest First)</option>
+                    <option value="rating-lowest">Rating (Lowest First)</option>
+                </select>
+            </div>
+            
+            <div class="reviews-container">
+                <!-- Sample review items -->
+                <div class="review-item" id="review-1">
+                    <div class="review-meta">
+                        <span class="review-author">John Doe</span>
+                        <span class="review-date" data-date="2023-10-15">October 15, 2023</span>
+                    </div>
+                    <h3 class="review-game">Elden Ring</h3>
+                    <div id="rating-1" class="review-rating" data-rating="5"></div>
+                    <div class="review-content">
+                        This game is absolutely incredible! The open world design is breathtaking, and the combat system is challenging but rewarding. I've spent over 100 hours exploring the Lands Between and still haven't discovered everything. The boss fights are epic, and the lore is deep and mysterious. Definitely one of the best games I've played in years.
+                    </div>
+                </div>
+                
+                <div class="review-item" id="review-2">
+                    <div class="review-meta">
+                        <span class="review-author">Jane Smith</span>
+                        <span class="review-date" data-date="2023-09-20">September 20, 2023</span>
+                    </div>
+                    <h3 class="review-game">Baldur's Gate 3</h3>
+                    <div id="rating-2" class="review-rating" data-rating="4.5"></div>
+                    <div class="review-content">
+                        Baldur's Gate 3 successfully brings the depth of D&D to video games. The character customization is impressive, and the story branches significantly based on your choices. Combat is strategic and fun. My only complaint is some minor bugs, but they don't detract from the overall experience.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 GameRevs. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript files -->
+    <script type="module" src="{{ url_for('static', filename='js/review-helper.js') }}"></script>
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/game-filter.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/toggle-details.js') }}"></script>
+</body>
+</html> 

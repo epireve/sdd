@@ -1,0 +1,40 @@
+{% extends "gamereview/base.html" %}
+
+{% block subtitle %}Review: {{ game.title }}{% endblock %}
+
+{% block content %}
+<div class="breadcrumbs fade-in">
+    <a href="{% url 'gamereview:gamelist' %}">Home</a>
+    <span class="breadcrumb-separator">›</span>
+    <span class="current">{{ game.title }}</span>
+</div>
+
+<div class="game-details fade-in">
+    <h2>{{ game.title }}</h2>
+    <div class="game-info">
+        <p><strong>Platform:</strong> {{ game.platform }}</p>
+        <p><strong>Developer:</strong> {{ game.developer }}</p>
+        <p><strong>Tags:</strong> 
+            <span class="tags">
+                {% for tag in game.label_tag.all %}
+                    <span class="tag">{{ tag.label }}</span>{% if not forloop.last %} {% endif %}
+                {% endfor %}
+            </span>
+        </p>
+    </div>
+</div>
+
+<h4>Reviews</h4>
+<div class="reviews-list">
+    {% if game.review_set.all %}
+        {% for review_item in game.review_set.all %}
+        <div class="review-item fade-in">
+            <p class="review-date">{{ review_item.date }}</p>
+            <div class="review-content">{{ review_item.review }}</div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-reviews">No reviews yet. Be the first to review this game!</p>
+    {% endif %}
+</div>
+{% endblock %} 
